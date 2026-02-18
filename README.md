@@ -3,46 +3,58 @@
 <head>
   <title>Happy Birthday Legend 🎉</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       padding: 0;
-      text-align: center;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
       overflow: hidden;
-      background: linear-gradient(-45deg, #ff4e50, #f9d423, #24c6dc, #5433ff);
-      background-size: 400% 400%;
-      animation: gradientBG 8s ease infinite;
+      background: radial-gradient(circle at top, #1e1e2f, #0f0f1a);
       color: white;
+      text-align: center;
     }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .container {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      backdrop-filter: blur(15px);
+      background: rgba(255,255,255,0.1);
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
     }
 
     h1 {
-      font-size: 60px;
-      margin-top: 120px;
-      animation: fadeIn 2s ease-in-out;
+      font-size: 35px;
+      min-height: 50px;
     }
 
-    p {
-      font-size: 24px;
-      animation: fadeIn 3s ease-in-out;
+    .slideshow img {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 20px;
+      height: 250px;
+      object-fit: cover;
     }
 
     button {
-      padding: 15px 30px;
-      font-size: 18px;
+      margin-top: 20px;
+      padding: 12px 25px;
       border: none;
       border-radius: 30px;
-      cursor: pointer;
-      margin-top: 30px;
-      background: white;
-      color: #ff4e50;
+      background: linear-gradient(45deg, #ff4e50, #f9d423);
+      color: white;
       font-weight: bold;
+      cursor: pointer;
       transition: 0.3s;
     }
 
@@ -50,51 +62,115 @@
       transform: scale(1.1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .confetti {
+    canvas {
       position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      top: -10px;
-      animation: fall 5s linear infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-      }
+      top: 0;
+      left: 0;
+      z-index: -1;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>🎉 Happy Birthday Bro 🎉</h1>
-  <p>You are not older… just more legendary 😎🔥</p>
+<canvas id="bg"></canvas>
 
-  <button onclick="surprise()">Click for Surprise 🎁</button>
+<div class="container">
+  <h1 id="typewriter"></h1>
 
-  <script>
-    function surprise() {
-      alert("You're not just my best friend. You're family. Stay crazy, stay awesome. Love you bro 💙");
-    }
+  <div class="slideshow">
+    <img id="slide" src="https://picsum.photos/500/300?1">
+  </div>
 
-    // Confetti generator
-    for (let i = 0; i < 100; i++) {
-      let confetti = document.createElement("div");
-      confetti.classList.add("confetti");
-      confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      confetti.style.backgroundColor = 
-        "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-      document.body.appendChild(confetti);
-    }
-  </script>
+  <button onclick="blast()">Celebrate 🎉</button>
+  <button onclick="playMusic()">Play Music 🎵</button>
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<script>
+/* TYPEWRITER EFFECT */
+let text = "🎉 Happy Birthday Legend! 🎉";
+let i = 0;
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("typewriter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, 80);
+  }
+}
+typeEffect();
+
+/* SLIDESHOW */
+let images = [
+  "https://picsum.photos/500/300?1",
+  "https://picsum.photos/500/300?2",
+  "https://picsum.photos/500/300?3"
+];
+let index = 0;
+setInterval(() => {
+  index = (index + 1) % images.length;
+  document.getElementById("slide").src = images[index];
+}, 3000);
+
+/* CONFETTI BLAST */
+function blast() {
+  for (let i = 0; i < 150; i++) {
+    let confetti = document.createElement("div");
+    confetti.style.position = "fixed";
+    confetti.style.width = "8px";
+    confetti.style.height = "8px";
+    confetti.style.background = "hsl(" + Math.random()*360 + ",100%,50%)";
+    confetti.style.left = Math.random()*100 + "vw";
+    confetti.style.top = "-10px";
+    confetti.style.animation = "fall 3s linear";
+    document.body.appendChild(confetti);
+
+    confetti.animate([
+      { transform: "translateY(0px)" },
+      { transform: "translateY(100vh)" }
+    ], { duration: 3000 });
+
+    setTimeout(() => confetti.remove(), 3000);
+  }
+}
+
+/* MUSIC */
+function playMusic() {
+  document.getElementById("music").play();
+}
+
+/* PARTICLE BACKGROUND */
+let canvas = document.getElementById("bg");
+let ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+for (let i = 0; i < 100; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 2,
+    dx: Math.random() - 0.5,
+    dy: Math.random() - 0.5
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 
 </body>
 </html>
