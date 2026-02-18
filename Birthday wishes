@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Happy Birthday My Nigga 🤣 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+    }
+
+    .screen {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: 1s;
+    }
+
+    #intro {
+      background: black;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    #main {
+      opacity: 0;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      background: white;
+      color: #2a5298;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -10px;
+      font-size: 20px;
+      animation: float 5s linear infinite;
+    }
+
+    @keyframes float {
+      to {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="intro" class="screen" onclick="startSurprise()">
+  <h1>🎁 Tap to Open Your Surprise 🎁</h1>
+  <p>(Trust me... it's worth it 😎)</p>
+</div>
+
+<div id="main" class="screen">
+  <h1>🎉 Happy Birthday Legend 🎉</h1>
+  <p>You’re not getting older… you’re leveling up! 🔥</p>
+  <button onclick="confetti()">Celebrate 🎆</button>
+</div>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<script>
+function startSurprise() {
+  document.getElementById("intro").style.opacity = "0";
+  setTimeout(() => {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.opacity = "1";
+  }, 800);
+
+  document.getElementById("music").play();
+  startHearts();
+}
+
+function startHearts() {
+  setInterval(() => {
+    let heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }, 500);
+}
+
+function confetti() {
+  for (let i = 0; i < 120; i++) {
+    let conf = document.createElement("div");
+    conf.style.position = "fixed";
+    conf.style.width = "8px";
+    conf.style.height = "8px";
+    conf.style.background = "hsl(" + Math.random()*360 + ",100%,50%)";
+    conf.style.left = Math.random()*100 + "vw";
+    conf.style.top = "-10px";
+    conf.style.animation = "fall 3s linear";
+    document.body.appendChild(conf);
+
+    conf.animate([
+      { transform: "translateY(0px)" },
+      { transform: "translateY(100vh)" }
+    ], { duration: 3000 });
+
+    setTimeout(() => conf.remove(), 3000);
+  }
+}
+</script>
+
+</body>
+</html>
