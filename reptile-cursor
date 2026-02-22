@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reptile Interactive Cursor</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0f0f0f;
+            cursor: none;
+        }
+
+        .snake-segment {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(45deg, #00ff66, #006633);
+            border-radius: 50%;
+            position: absolute;
+            pointer-events: none;
+            box-shadow: 0 0 10px #00ff66;
+            transition: transform 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const segments = [];
+    const segmentCount = 20;
+
+    for (let i = 0; i < segmentCount; i++) {
+        const div = document.createElement("div");
+        div.classList.add("snake-segment");
+        document.body.appendChild(div);
+        segments.push({
+            element: div,
+            x: 0,
+            y: 0
+        });
+    }
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animate() {
+        let x = mouseX;
+        let y = mouseY;
+
+        segments.forEach((segment, index) => {
+            segment.x += (x - segment.x) * 0.3;
+            segment.y += (y - segment.y) * 0.3;
+
+            segment.element.style.left = segment.x + "px";
+            segment.element.style.top = segment.y + "px";
+
+            x = segment.x;
+            y = segment.y;
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
+</html>
