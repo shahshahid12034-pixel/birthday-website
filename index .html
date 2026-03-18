@@ -8,60 +8,55 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to top, #ff9a9e, #fad0c4);
-    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to top, #1e1e2f, #3a3a5f);
     text-align: center;
+    overflow-x: hidden;
+    color: white;
 }
 
 /* Title */
 h1 {
-    font-size: 3em;
-    color: white;
-    margin-top: 50px;
-    animation: glow 2s infinite alternate;
+    font-size: 2.5em;
+    margin-top: 30px;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px white; }
-    to { text-shadow: 0 0 25px yellow; }
-}
-
-/* Party Cone 🎩 */
-.cone {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 60px;
+/* Image */
+img.main {
+    width: 80%;
+    max-width: 300px;
+    border-radius: 20px;
+    margin-top: 20px;
 }
 
 /* Cake */
 .cake {
-    position: relative;
-    margin: 50px auto;
-    width: 200px;
-    height: 150px;
+    margin: 30px auto;
+    width: 150px;
+    height: 100px;
     background: pink;
     border-radius: 10px;
+    position: relative;
 }
 
 .candle {
-    width: 10px;
-    height: 40px;
+    width: 8px;
+    height: 30px;
     background: white;
     position: absolute;
-    top: -40px;
-    left: 95px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .flame {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background: orange;
     border-radius: 50%;
     position: absolute;
-    top: -10px;
-    animation: flicker 0.3s infinite;
+    top: -8px;
+    animation: flicker 0.4s infinite;
 }
 
 @keyframes flicker {
@@ -72,40 +67,42 @@ h1 {
 
 /* Balloons */
 .balloon {
-    position: absolute;
+    position: fixed;
     bottom: -100px;
-    width: 40px;
-    height: 50px;
-    background: red;
+    width: 30px;
+    height: 40px;
     border-radius: 50%;
-    animation: floatUp 6s linear infinite;
+    animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
-    from { transform: translateY(0); }
     to { transform: translateY(-120vh); }
+}
+
+/* Button */
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(to right, orange, pink);
+    color: white;
+    font-size: 16px;
+    margin: 10px;
 }
 
 /* Message */
 .message {
-    color: white;
-    font-size: 1.2em;
     padding: 20px;
-    animation: fadeIn 3s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    font-size: 1.1em;
 }
 </style>
 </head>
 
 <body>
 
-<img src="https://cdn-icons-png.flaticon.com/512/3468/3468379.png" class="cone">
-
 <h1>🎉 Happy Birthday Bro 🎉</h1>
+
+<img src="https://picsum.photos/300" class="main">
 
 <div class="cake">
     <div class="candle">
@@ -113,22 +110,28 @@ h1 {
     </div>
 </div>
 
+<button onclick="playMusic()">Play Music 🎵</button>
+
 <div class="message">
-    <p>Bro, you're not just a friend — you're family ❤️</p>
-    <p>Thanks for all the crazy memories, laughs, and support.</p>
-    <p>May your life be full of success, happiness, and unlimited biryani 🍗🔥</p>
-    <p>Stay awesome and never change 😎</p>
+    Bro, you're not just a friend — you're family ❤️ <br>
+    Stay crazy, stay real, and keep shining 🔥
 </div>
 
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
 <script>
-// Create balloons
-for (let i = 0; i < 20; i++) {
-    let balloon = document.createElement("div");
-    balloon.className = "balloon";
-    balloon.style.left = Math.random() * 100 + "vw";
-    balloon.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
-    balloon.style.animationDuration = (4 + Math.random()*3) + "s";
-    document.body.appendChild(balloon);
+function playMusic() {
+    document.getElementById("music").play();
+}
+
+/* Balloons */
+for (let i = 0; i < 15; i++) {
+    let b = document.createElement("div");
+    b.className = "balloon";
+    b.style.left = Math.random() * 100 + "vw";
+    b.style.background = `hsl(${Math.random()*360},70%,60%)`;
+    b.style.animationDuration = (4 + Math.random()*3) + "s";
+    document.body.appendChild(b);
 }
 </script>
 
